@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
 
-class LectValArchivoTest {
+public class LectValArchivoTest {
 
     @Test
     @DisplayName("Checar si el archivo JSON existe")
