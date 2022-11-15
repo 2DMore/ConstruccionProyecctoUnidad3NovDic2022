@@ -37,6 +37,7 @@ public class LectValArchivoTest {
                     assertTrue(testObj.containsKey("firstName"));
                     assertTrue(testObj.containsKey("lastName"));
                     assertTrue(testObj.containsKey("photo"));
+                    assertEquals(4,testObj.size());
                 }
             }
         } catch (ParseException e) {
