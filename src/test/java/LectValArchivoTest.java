@@ -1,3 +1,4 @@
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -26,6 +27,19 @@ public class LectValArchivoTest {
         try {
             JSONObject obj=new JSONObject((JSONObject) parser.parse(txtJSON));
             assertTrue(obj.containsKey("employees"));
+            JSONArray jsonArray=(JSONArray) obj.get("employees");
+            if (jsonArray.size()==0){
+                assertEquals(0, jsonArray.size());
+            }else{
+                for (Object empleado : jsonArray ) {
+                    JSONObject testObj = (JSONObject) empleado;
+                    assertTrue(testObj.containsKey("id"));
+                    assertTrue(testObj.containsKey("firstName"));
+                    assertTrue(testObj.containsKey("lastName"));
+                    assertTrue(testObj.containsKey("photo"));
+                    assertEquals(4,testObj.size());
+                }
+            }
         } catch (ParseException e) {
             fail("Validation failed with: " + e.getMessage());
         }
