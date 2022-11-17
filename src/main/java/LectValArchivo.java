@@ -1,3 +1,4 @@
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -8,7 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class LectValArchivo {
-    public static void main(String[] args){
+    public static void main(String[] args) throws ParseException {
         System.out.println(getJSONContent());
     }
     public static String getJSONContent(){
