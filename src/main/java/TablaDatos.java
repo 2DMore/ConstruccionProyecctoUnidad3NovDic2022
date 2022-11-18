@@ -3,8 +3,14 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class TablaDatos {
     private JTable table1;
@@ -26,9 +32,43 @@ public class TablaDatos {
         employeeManager = new EmployeeManager();
         populateEmployeeManager();
         Object[][] dummyData= employeeManager.getEmployeesAsObjectMatrix();
-        DefaultTableModel model=new DefaultTableModel(dummyData,encabezado);
+        changeURLtoImages(dummyData);
+        DefaultTableModel model=new DefaultTableModel(dummyData,encabezado){
+            public Class getColumnClass(int column)
+            {
+                return getValueAt(0, column).getClass();
+            }
+        };
         model.setColumnIdentifiers(encabezado);
         table1=new JTable(model);
+    }
+
+
+    private void changeURLtoImages(Object[][] employeesMatrix){
+        int i = 0;
+        for (Object[] employee: employeesMatrix) {
+
+            try {
+                ImageIcon imageIcon = new ImageIcon(ImageIO.read(new URL((String) employee[3])));
+                Image image = getScaledImage(imageIcon.getImage(), 50, 50);
+                imageIcon = new ImageIcon(image);
+                Icon icon = (Icon) imageIcon ;
+                employee[3] = icon ;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    private Image getScaledImage(Image srcImg, int w, int h){
+        BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = resizedImg.createGraphics();
+
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2.drawImage(srcImg, 0, 0, w, h, null);
+        g2.dispose();
+
+        return resizedImg;
     }
 
     private void populateEmployeeManager(){
