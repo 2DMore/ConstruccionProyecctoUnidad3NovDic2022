@@ -9,21 +9,33 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 public class TablaDatos {
     private JTable table1;
     private JPanel panel;
+    private JButton modButton;
     String[] encabezado={"ID","First name", "Last name","Photo"};
 
     private EmployeeManager employeeManager;
 
+    public TablaDatos(JFrame jf){
+        modButton.addActionListener(e -> {
+            JFrame modJF= new JFrame("Modify Employees");
+            modJF.setSize(600,500);
+            modJF.getContentPane().add(new ModificacionReg(modJF).getPanelMod());
+            modJF.setVisible(true);
+            modJF.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+            //Close current window
+            jf.setVisible(false);
+            jf.dispose();
+        });
+    }
 
     public static void main(String[] args) {
         JFrame jf= new JFrame("No Dummies anymore");
         jf.setSize(600,500);
-        jf.add(new TablaDatos().panel);
+        jf.add(new TablaDatos(jf).panel);
         jf.setVisible(true);
         jf.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
@@ -77,5 +89,8 @@ public class TablaDatos {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
+    }
+    public JPanel getPanel(){
+        return panel;
     }
 }

@@ -5,14 +5,12 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class ModificacionReg {
     private JTextField photoField;
     private JTextField LNameField;
     private JTextField FNameField;
-    private JPanel panel;
+    private JPanel panelMod;
     private JButton modifyButton;
     private JButton cancelButton;
     private JComboBox employBox;
@@ -20,6 +18,7 @@ public class ModificacionReg {
 
     public ModificacionReg(JFrame jf) {
         cancelButton.addActionListener(e -> {
+            openEmployTable();
             jf.setVisible(false);
             jf.dispose();
         });
@@ -33,18 +32,29 @@ public class ModificacionReg {
             throw new RuntimeException(e);
         }
         modifyButton.addActionListener(e -> {
-            //ModifyJSON.modifyEmployee(String.valueOf(employBox.getSelectedItem()),FNameField.getText(),LNameField.getText(),photoField.getText());
+            ModifyJSON.ModifyEmployee(String.valueOf(employBox.getSelectedItem()),FNameField.getText(),LNameField.getText(),photoField.getText());
+            openEmployTable();
             jf.setVisible(false);
             jf.dispose();
         });
+    }
+    public void openEmployTable(){
+        JFrame tableJF= new JFrame("EmployeeTable");
+        tableJF.setSize(600,500);
+        tableJF.getContentPane().add(new TablaDatos(tableJF).getPanel());
+        tableJF.setVisible(true);
+        tableJF.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
     public static void main(String[] args) {
         JFrame jf= new JFrame("Modify Employees");
         jf.setSize(600,500);
-        jf.add(new ModificacionReg(jf).panel);
+        jf.add(new ModificacionReg(jf).panelMod);
 
         jf.setVisible(true);
         jf.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    }
+    public JPanel getPanelMod(){
+        return panelMod;
     }
 }
