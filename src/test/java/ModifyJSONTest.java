@@ -20,7 +20,7 @@ class ModifyJSONTest {
             String newFName="Bruce";
             String newLName="Lee";
             String newPhoto="https://jsonformatter.org/img/tom-cruise.jpg";
-            System.out.println(newPhoto);
+            //System.out.println(newPhoto);
             EmployeeManager em=new EmployeeManager();
             em.importFromJSONArray((JSONArray) ((JSONObject) new JSONParser().parse(LectValArchivo.getJSONContent())).get("employees"));
             for(Employee employee:em.getEmployeesList()){
