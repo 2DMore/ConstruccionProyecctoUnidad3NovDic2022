@@ -28,6 +28,9 @@ public class ModificacionReg {
             for(Employee empleado: this.employeeManager.getEmployeesList()){
                 employBox.addItem(empleado.getId());
             }
+            FNameField.setText(String.valueOf(this.employeeManager.getEmployeesList().get(employBox.getSelectedIndex()).getFirstName()));
+            LNameField.setText(String.valueOf(this.employeeManager.getEmployeesList().get(employBox.getSelectedIndex()).getLastName()));
+            photoField.setText(String.valueOf(this.employeeManager.getEmployeesList().get(employBox.getSelectedIndex()).getPhoto()));
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
@@ -37,6 +40,12 @@ public class ModificacionReg {
             jf.setVisible(false);
             jf.dispose();
         });
+        employBox.addActionListener(e -> {
+            FNameField.setText(String.valueOf(this.employeeManager.getEmployeesList().get(employBox.getSelectedIndex()).getFirstName()));
+            LNameField.setText(String.valueOf(this.employeeManager.getEmployeesList().get(employBox.getSelectedIndex()).getLastName()));
+            photoField.setText(String.valueOf(this.employeeManager.getEmployeesList().get(employBox.getSelectedIndex()).getPhoto()));
+        });
+
     }
     public void openEmployTable(){
         JFrame tableJF= new JFrame("EmployeeTable");
@@ -53,6 +62,7 @@ public class ModificacionReg {
 
         jf.setVisible(true);
         jf.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
     }
     public JPanel getPanelMod(){
         return panelMod;
