@@ -12,7 +12,7 @@ public class EmployeeManager {
     }
 
 
-    private final List<Employee> employeesList;
+    private List<Employee> employeesList;
 
     public EmployeeManager() {
         employeesList = new ArrayList<>();
@@ -23,6 +23,7 @@ public class EmployeeManager {
     }
 
     public void importFromJSONArray(JSONArray employeesJSONArray) {
+        this.employeesList = new ArrayList<>();
         for (Object employee : employeesJSONArray) {
             JSONObject employeeJSONObject = (JSONObject) employee;
             Employee tempEmployee = new Employee(

@@ -2,6 +2,7 @@ import Entities.Employee;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.Test;
 
 import javax.imageio.ImageIO;
@@ -42,5 +43,21 @@ class ModifyJSONTest {
             fail("Invalid photo URL");
         }
 
+    }
+
+    @Test
+    public void deleteEmployee() throws ParseException {
+        EmployeeManager em=new EmployeeManager();
+        em.importFromJSONArray((JSONArray) ((JSONObject) new JSONParser().parse(LectValArchivo.getJSONContent())).get("employees"));
+        int firstSize = em.getEmployeesList().size();
+
+        String idOfEmployeeToDelete = em.getEmployeesList().get(0).getId();
+        ModifyJSON.deleteEmployee(idOfEmployeeToDelete);
+
+        em.importFromJSONArray((JSONArray) ((JSONObject) new JSONParser().parse(LectValArchivo.getJSONContent())).get("employees"));
+        int newSize = em.getEmployeesList().size();
+
+        assertNotEquals(newSize, firstSize);
+        assertEquals(++newSize, firstSize);
     }
 }
