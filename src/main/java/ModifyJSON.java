@@ -41,6 +41,40 @@ public class ModifyJSON {
         }
     }
 
+
+    public static void deleteEmployee(String employeeID){
+        EmployeeManager em=new EmployeeManager();
+        try {
+            em.importFromJSONArray((JSONArray) ((JSONObject) new JSONParser().parse(LectValArchivo.getJSONContent())).get("employees"));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        };
+        JSONObject employees=new JSONObject();
+
+        JSONArray employArray=new JSONArray();
+        JSONArray newEmployeeArray=new JSONArray();
+        for(Employee employee:em.getEmployeesList()){
+            JSONObject employArrayElement=new JSONObject();
+            if(employee.getId().equals(employeeID)){
+            }else {
+                employArrayElement.put("id", employee.getId());
+                employArrayElement.put("firstName", employee.getFirstName());
+                employArrayElement.put("lastName", employee.getLastName());
+                employArrayElement.put("photo", employee.getPhoto());
+                newEmployeeArray.add(employArrayElement);
+            }
+        }
+        employees.put("employees",newEmployeeArray);
+
+        try {
+            FileWriter fw=new FileWriter("src/JsonFile.json");
+            fw.write(employees.toString());
+            fw.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static void main(String[] args) {
         ModifyEmployee("2","Pancho","Villa","https://jsonformatter.org/img/Maria-Sharapova.jpg");
     }
