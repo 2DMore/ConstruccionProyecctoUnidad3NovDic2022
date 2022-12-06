@@ -28,7 +28,7 @@ public class AgregarReg {
             if(!firstNField.getText().isBlank() && !lastNField.getText().isBlank() && !photoField.getText().isBlank()){
                 try{
                     ImageIcon imageIcon = new ImageIcon(ImageIO.read(new URL(photoField.getText())));
-                    //ModifyJSON.addEmployee(firstNField.getText(),lastNField.getText(),photoField.getText());
+                    ModifyJSON.addEmployee(firstNField.getText(),lastNField.getText(),photoField.getText());
                     openEmployTable();
                     jf.setVisible(false);
                     jf.dispose();
