@@ -75,6 +75,7 @@ public class TablaDatos {
         };
         model.setColumnIdentifiers(encabezado);
         table1=new JTable(model);
+        table1.setRowHeight(35);
     }
 
 
