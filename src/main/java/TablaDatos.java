@@ -16,6 +16,7 @@ public class TablaDatos {
     private JPanel panel;
     private JButton modButton;
     private JButton deleteEmployeeButton;
+    private JButton addEmployeeButton;
     String[] encabezado={"ID","First name", "Last name","Photo"};
 
     private EmployeeManager employeeManager;
@@ -37,6 +38,16 @@ public class TablaDatos {
             delJF.getContentPane().add(new EliminacionReg(delJF).getPanelMod());
             delJF.setVisible(true);
             delJF.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+            //Close current window
+            jf.setVisible(false);
+            jf.dispose();
+        });
+        addEmployeeButton.addActionListener(e->{
+            JFrame addJF= new JFrame("Add Employee");
+            addJF.setSize(600,500);
+            addJF.getContentPane().add(new AgregarReg(addJF).getPanelMod());
+            addJF.setVisible(true);
+            addJF.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             //Close current window
             jf.setVisible(false);
             jf.dispose();
