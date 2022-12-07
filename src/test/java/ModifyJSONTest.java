@@ -60,4 +60,29 @@ class ModifyJSONTest {
         assertNotEquals(newSize, firstSize);
         assertEquals(++newSize, firstSize);
     }
+    @Test
+    public void addEmployee() throws ParseException {
+        EmployeeManager em=new EmployeeManager();
+        em.importFromJSONArray((JSONArray) ((JSONObject) new JSONParser().parse(LectValArchivo.getJSONContent())).get("employees"));
+        int firstSize = em.getEmployeesList().size();
+        try{
+            String newFName="Bruce";
+            String newLName="Lee";
+            String newPhoto="https://jsonformatter.org/img/tom-cruise.jpg";
+            //It will throw an exception if the new URL is not valid.
+            ImageIcon imageIcon = new ImageIcon(ImageIO.read(new URL(newPhoto)));
+            assertFalse(newFName.isBlank());
+            assertFalse(newLName.isBlank());
+            assertFalse(newPhoto.isBlank());
+            ModifyJSON.addEmployee(newFName,newLName,newPhoto);
+        }catch(Exception e){
+            e.printStackTrace();
+            fail("Invalid photo URL");
+        }
+        em.importFromJSONArray((JSONArray) ((JSONObject) new JSONParser().parse(LectValArchivo.getJSONContent())).get("employees"));
+        int newSize = em.getEmployeesList().size();
+
+        assertNotEquals(newSize, firstSize);
+        assertEquals(newSize, ++firstSize);
+    }
 }

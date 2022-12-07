@@ -74,8 +74,45 @@ public class ModifyJSON {
             throw new RuntimeException(e);
         }
     }
+    public static void addEmployee(String FName, String LName, String photo){
+        int ID=0;
+        EmployeeManager em=new EmployeeManager();
+        try {
+            em.importFromJSONArray((JSONArray) ((JSONObject) new JSONParser().parse(LectValArchivo.getJSONContent())).get("employees"));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        };
+        JSONObject employees=new JSONObject();
+        JSONArray employArray=new JSONArray();
+        for(Employee employee:em.getEmployeesList()){
+            JSONObject employArrayElement=new JSONObject();
+            employArrayElement.put("id",employee.getId());
+            employArrayElement.put("firstName",employee.getFirstName());
+            employArrayElement.put("lastName",employee.getLastName());
+            employArrayElement.put("photo",employee.getPhoto());
+            employArray.add(employArrayElement);
+            ID=Integer.parseInt(employee.getId());
+        }
+        JSONObject newEmployeeJSON= new JSONObject();
+
+        newEmployeeJSON.put("id",String.valueOf(ID+1));
+        newEmployeeJSON.put("firstName", FName);
+        newEmployeeJSON.put("lastName", LName);
+        newEmployeeJSON.put("photo",photo);
+        employArray.add(newEmployeeJSON);
+
+        employees.put("employees",employArray);
+        try {
+            FileWriter fw=new FileWriter("src/JsonFile.json");
+            fw.write(employees.toString());
+            fw.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static void main(String[] args) {
-        ModifyEmployee("2","Pancho","Villa","https://jsonformatter.org/img/Maria-Sharapova.jpg");
+        //ModifyEmployee("2","Pancho","Villa","https://jsonformatter.org/img/Maria-Sharapova.jpg");
+        addEmployee("a","a","https://jsonformatter.org/img/Maria-Sharapova.jpg");
     }
 }
