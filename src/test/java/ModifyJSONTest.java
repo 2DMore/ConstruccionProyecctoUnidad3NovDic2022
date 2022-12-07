@@ -61,7 +61,10 @@ class ModifyJSONTest {
         assertEquals(++newSize, firstSize);
     }
     @Test
-    public void addEmployee(){
+    public void addEmployee() throws ParseException {
+        EmployeeManager em=new EmployeeManager();
+        em.importFromJSONArray((JSONArray) ((JSONObject) new JSONParser().parse(LectValArchivo.getJSONContent())).get("employees"));
+        int firstSize = em.getEmployeesList().size();
         try{
             String newFName="Bruce";
             String newLName="Lee";
@@ -76,5 +79,10 @@ class ModifyJSONTest {
             e.printStackTrace();
             fail("Invalid photo URL");
         }
+        em.importFromJSONArray((JSONArray) ((JSONObject) new JSONParser().parse(LectValArchivo.getJSONContent())).get("employees"));
+        int newSize = em.getEmployeesList().size();
+
+        assertNotEquals(newSize, firstSize);
+        assertEquals(newSize, ++firstSize);
     }
 }
